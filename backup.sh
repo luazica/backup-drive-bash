@@ -1,7 +1,6 @@
 #!/bin/bash
 CONFIG_FILE="$(dirname "$0")/backup.conf"
 if [ ! -f "$CONFIG_FILE" ]; then
-    echo "CONFIGURE O ARQUIVO: backup.conf"
     cat > "$CONFIG_FILE" << 'EOF'
 # ------------------------ CONFIGURAÇÕES DE BACKUP -------------------------
 
@@ -27,8 +26,8 @@ CRON_LINE="$MINUTE $HOUR $DAY $MONTH $WEEKDAY $DIR/backup.sh"
 RCLONE_REMOTE="gdrive:Backup"
 EOF
     nano $CONFIG_FILE
-    mkdir -p "$LOCAL_BACKUPS"
-    exit 1
+    echo "CONFIGURAÇÕES SALVAS!"
+    ./backup.sh
 fi
 source "$CONFIG_FILE"
 mkdir -p "$LOCAL_BACKUPS"
