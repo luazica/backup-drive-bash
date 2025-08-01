@@ -1,29 +1,26 @@
 #!/bin/bash
-
-CONFIG_FILE="$(dirname "$0")/backup_sh.conf"
+CONFIG_FILE="$(dirname "$0")/backup.conf"
 if [ ! -f "$CONFIG_FILE" ]; then
+    echo "configure o arquivo backup.conf"
     cat > "$CONFIG_FILE" << 'EOF'
-# diretório a ser feito backup
+# CAMINHO COMPLETO do diretório a ser feito backup (ex: /home/seu_user/documentos)
 DIR=""
 
-# diretório do script de backup
-SCRIPT_DIR=""
-
-# pasta de backups locais
+# CAMINHO COMPLETO da pasta de backups locais (ex: /home/seu_user/.backups)
+# caso não exista, será criada automaticamente
 LOCAL_BACKUPS=""
 
-# dias para manter backups (0 para não apagar)
-CLEAN_DAYS=
+# dias para manter backups (0 para não apagar; padrão = 7 dias)
+CLEAN_DAYS=7
 
-# configurações do agendamento
-# use * para deixar vazio / em weekday, domingo="0" ->...-> sábado="6" / não mexa na cron_line
-# o default aqui está para 2 da manhã de toda segunda feira
+# configurações do agendamento | padrão = as 2:00AM às segundas-feiras
+# use * para deixar vazio | em weekday, domingo="0" ->...-> sábado="6" | não mexa na cron_line
 MINUTE="0"
 HOUR="2"
 DAY="*"
 MONTH="*"
 WEEKDAY="1"
-CRON_LINE="$MINUTE $HOUR $DAY $MONTH $WEEKDAY $SCRIPT_DIR/backup.sh"
+CRON_LINE="$MINUTE $HOUR $DAY $MONTH $WEEKDAY $DIR/backup.sh"
 
 # pasta de backup no google drive
 RCLONE_REMOTE="gdrive:Backup"
@@ -60,7 +57,7 @@ if tar -czPf "$archive_backup" "$DIR"; then
         echo -e "$data[ERRO]: houve uma falha ao enviar o backup ao google drive\n" >> "$log"
         sudo -v ; curl https://rclone.org/install.sh | sudo bash
         rclone config
-        $SCRIPT_DIR/backup.sh
+        ./backup.sh
     fi
 else
     echo "backup não sucedido!"
