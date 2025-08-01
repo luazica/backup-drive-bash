@@ -16,12 +16,13 @@ LOCAL_BACKUPS=""
 CLEAN_DAYS=
 
 # configurações do agendamento
-# use * para deixar vazio
-MINUTE=""
-HOUR=""
-DAY=""
-MONTH=""
-WEEKDAY=""
+# use * para deixar vazio / em weekday, domingo="0" ->...-> sábado="6" / não mexa na cron_line
+# o default aqui está para 2 da manhã de toda segunda feira
+MINUTE="0"
+HOUR="2"
+DAY="*"
+MONTH="*"
+WEEKDAY="1"
 CRON_LINE="$MINUTE $HOUR $DAY $MONTH $WEEKDAY $SCRIPT_DIR/backup.sh"
 
 # pasta de backup no google drive
