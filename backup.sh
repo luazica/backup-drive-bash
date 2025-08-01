@@ -28,6 +28,7 @@ EOF
     nano $CONFIG_FILE
     echo "CONFIGURAÇÕES SALVAS!"
     ./backup.sh
+    exit 0
 fi
 source "$CONFIG_FILE"
 mkdir -p "$LOCAL_BACKUPS"
