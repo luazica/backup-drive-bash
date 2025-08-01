@@ -1,5 +1,5 @@
 ```instalação do script:
-git clone https://github.com/luazica/backup-drive-bash.git ~/backup-drive-bash
+git clone https://github.com/luazica/backup-drive-bash.git ~/backup-drive
 ```
 
 # Como usar pela primeira vez.
