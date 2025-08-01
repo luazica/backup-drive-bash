@@ -1,13 +1,14 @@
 #!/bin/bash
 CONFIG_FILE="$(dirname "$0")/backup.conf"
 if [ ! -f "$CONFIG_FILE" ]; then
-    echo "configure o arquivo backup.conf"
+    echo "CONFIGURE O ARQUIVO: backup.conf"
     cat > "$CONFIG_FILE" << 'EOF'
+# ------------------------ CONFIGURAÇÕES DE BACKUP -------------------------
+
 # CAMINHO COMPLETO do diretório a ser feito backup (ex: /home/seu_user/documentos)
 DIR=""
 
-# CAMINHO COMPLETO da pasta de backups locais (ex: /home/seu_user/.backups)
-# caso não exista, será criada automaticamente
+# CAMINHO COMPLETO da pasta de backups locais (ex: /home/seu_user/.backups) | caso não exista, será criada automaticamente
 LOCAL_BACKUPS=""
 
 # dias para manter backups (0 para não apagar; padrão = 7 dias)
@@ -25,16 +26,21 @@ CRON_LINE="$MINUTE $HOUR $DAY $MONTH $WEEKDAY $DIR/backup.sh"
 # pasta de backup no google drive
 RCLONE_REMOTE="gdrive:Backup"
 EOF
+    nano $CONFIG_FILE
+    mkdir -p "$LOCAL_BACKUPS"
+    mv backup.conf $LOCAL_BACKUPS
+    mv backup.sh $LOCAL_BACKUPS
+    echo -e "\nOs arquivos configurados foram movidos para a pasta de backups"
     exit 1
 fi
 source "$CONFIG_FILE"
+mkdir -p "$LOCAL_BACKUPS"
 
 (crontab -l 2>/dev/null; echo "$CRON_LINE") | crontab - >/dev/null 2>&1
 data=$(date +"[ %Y/%m/%d | %H:%M:%S ]::")
 log="$LOCAL_BACKUPS/backup_log.log"
 archive_backup="$LOCAL_BACKUPS/backup_$(date +"%Y-%m-%d").tar.gz"
 
-mkdir -p "$LOCAL_BACKUPS"
 
 if [ "$CLEAN_DAYS" -gt 0 ]; then
     find "$LOCAL_BACKUPS" -name "backup_*.tar.gz" -mtime +"$CLEAN_DAYS" -delete
