@@ -1,3 +1,7 @@
+```instalação do script:
+git clone https://github.com/luazica/backup-drive-bash.git
+```
+
 # como usar pela primeira vez.
 1. antes de tudo, tornar o arquivo executável com "sudo chmod +x backup.sh".
 2. ao executar pela primeira vez com "./backup.sh", será criado um arquivo de configurações, lá deverá ser inserido os caminhos de pastas e alguns parâmetros para a execução agendada do script.
