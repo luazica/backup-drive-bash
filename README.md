@@ -7,7 +7,7 @@ git clone https://github.com/luazica/backup-drive-bash.git ~/backup-drive
 
 Entre no diretório
 ```bash
-cd ~/backup-drive-bash
+cd ~/backup-drive
 ```
 Torne ele executável:
 ```bash
