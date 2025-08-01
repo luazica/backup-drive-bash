@@ -28,9 +28,6 @@ RCLONE_REMOTE="gdrive:Backup"
 EOF
     nano $CONFIG_FILE
     mkdir -p "$LOCAL_BACKUPS"
-    mv backup.conf $LOCAL_BACKUPS
-    mv backup.sh $LOCAL_BACKUPS
-    echo -e "\nOs arquivos configurados foram movidos para a pasta de backups"
     exit 1
 fi
 source "$CONFIG_FILE"
