@@ -61,6 +61,8 @@ if tar -czPf "$archive_backup" "$DIR"; then
         sudo -v ; curl https://rclone.org/install.sh | sudo bash
         rclone config
         ./backup.sh
+    else
+        rclone config
     fi
 else
     echo "backup não sucedido!"
